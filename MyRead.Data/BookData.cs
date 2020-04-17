@@ -7,6 +7,11 @@ namespace MyRead.Data
 {
     public class BookData : IBookData
     {
+        private BookContext bookContext;
+        public BookData(BookContext bookContext)
+        {
+            this.bookContext = bookContext;
+        }
         public Book AddBook(Book book)
         {
             throw new NotImplementedException();

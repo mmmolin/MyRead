@@ -11,9 +11,9 @@ namespace MyRead.Data
         private List<Book> books { get; set; }
         public InMemoryBookData()
         {
-            this.books = new List<Book> { new Book { Id = 1, Title = "The light fantastic", Author = "Terry Pratchett"},
-                                        new Book { Id = 2, Title = "Jingo", Author = "Terry Pratchett"},
-                                        new Book { Id = 3, Title = "Going postal", Author = "Terry Pratchett"},
+            this.books = new List<Book> { new Book { BookID = 1, Title = "The light fantastic",  Author = new Author {FirstName = "Terry Pratchett"}},
+                                        new Book { BookID = 2, Title = "Jingo", Author = new Author {FirstName = "Terry Pratchett"}},
+                                        new Book { BookID = 3, Title = "Going postal", Author = new Author {FirstName = "Terry Pratchett"}},
             };
         }
 
@@ -24,12 +24,12 @@ namespace MyRead.Data
 
         public Book GetBookById(int bookId)
         {
-            return books.Where(b => b.Id == bookId).FirstOrDefault(); ;
+            return books.Where(b => b.BookID == bookId).FirstOrDefault(); ;
         }
 
         public Book AddBook(Book book)
         {
-            book.Id = books.Max(b => b.Id) + 1;
+            book.BookID = books.Max(b => b.BookID) + 1;
             books.Add(book);
             return book;
         }
