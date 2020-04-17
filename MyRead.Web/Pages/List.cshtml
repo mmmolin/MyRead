@@ -1,0 +1,28 @@
+﻿@page
+@model MyRead.Web.Pages.ListModel
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>Administrator Controls</h1>
+<table class="table">
+    @foreach (var book in Model.Books)
+    {
+        <tr>
+            <th>
+                @book.Title
+            </th>
+            <th>
+                @book.Author
+            </th>
+            <th>
+                <a class="btn btn-primary" asp-page="./Edit" asp-route-bookId="@book.Id">Edit</a>
+            </th>
+            <th>
+                <a class="btn btn-danger" asp-page="./Delete" asp-route-bookId="@book.Id">Delete</a>
+            </th>
+        </tr>
+    }
+</table>
+<a class="btn btn-primary" asp-page="./Edit">Add book</a>
+
