@@ -11,6 +11,6 @@ namespace MyRead.Core
         public int CurrentPage { get; set; }
         public int Pages { get; set; }
 
-        public Author Author { get; set; }
+        public virtual Author Author { get; set; }
     }
 }

@@ -1,13 +1,15 @@
 ﻿using MyRead.Core;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MyRead.Data
 {
     public class BookData : IBookData
     {
-        private BookContext bookContext;
+        private readonly BookContext bookContext;
+
         public BookData(BookContext bookContext)
         {
             this.bookContext = bookContext;
@@ -29,7 +31,7 @@ namespace MyRead.Data
 
         public IEnumerable<Book> GetActiveBooks()
         {
-            throw new NotImplementedException();
+            return bookContext.Books.Select(r => r);
         }
 
         public Book GetBookById(int bookId)

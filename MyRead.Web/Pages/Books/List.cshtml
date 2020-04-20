@@ -1,5 +1,5 @@
 ﻿@page
-@model MyRead.Web.Pages.ListModel
+@model MyRead.Web.Pages.Books.ListModel
 @{
     ViewData["Title"] = "List";
 }
@@ -13,7 +13,7 @@
                 @book.Title
             </th>
             <th>
-                @book.Author
+                @book.Author.FirstName @book.Author.LastName
             </th>
             <th>
                 <a class="btn btn-primary" asp-page="./Edit" asp-route-bookId="@book.BookID">Edit</a>
