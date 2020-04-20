@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyRead.Core;
 using MyRead.Data;
 
-namespace MyRead.Web.Pages
+namespace MyRead.Web.Pages.Books
 {
     public class ListModel : PageModel
     {
