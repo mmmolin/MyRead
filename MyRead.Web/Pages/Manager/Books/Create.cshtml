@@ -1,0 +1,27 @@
+﻿@page "{bookId:int?}"
+@model MyRead.Web.Pages.Books.Manager.CreateModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+<form method="post"> 
+    <div class="form-group">
+        <label asp-for="@Model.Book.Title"></label>
+        <input type="text" asp-for="@Model.Book.Title" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Book.Pages"></label>
+        <input type="number" asp-for="@Model.Book.Pages" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Author.FirstName"></label>
+        <input type="text" asp-for="@Model.Author.FirstName" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Author.LastName"></label>
+        <input type="text" asp-for="@Model.Author.LastName" />
+    </div>
+    <button type="submit" class="alert-primary">Save</button>
+</form>
+

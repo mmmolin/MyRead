@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyRead.Core;
 using MyRead.Data;
 
-namespace MyRead.Web.Pages.Books
+namespace MyRead.Web.Pages.Books.Manager
 {
-    public class ListModel : PageModel
+    public class IndexModel : PageModel
     {
-        private readonly IBookData bookData;
+        private readonly ICrudData<Book> bookData;
         
-        public ListModel(IBookData bookData)
+        public IndexModel(ICrudData<Book> bookData)
         {
             this.bookData = bookData;
         }
@@ -18,7 +18,7 @@ namespace MyRead.Web.Pages.Books
         
         public void OnGet()
         {
-            Books = bookData.GetActiveBooks();
+            Books = bookData.GetAll();
         }
     }
 }

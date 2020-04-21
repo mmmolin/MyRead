@@ -11,8 +11,8 @@ namespace MyRead.Web.Pages
 {
     public class DeleteModel : PageModel
     {
-        private readonly IBookData bookData;
-        public DeleteModel(IBookData bookData)
+        private readonly ICrudData<Book> bookData;
+        public DeleteModel(ICrudData<Book> bookData)
         {
             this.bookData = bookData;
         }
@@ -21,13 +21,13 @@ namespace MyRead.Web.Pages
 
         public void OnGet(int bookId)
         {
-            Book = bookData.GetBookById(bookId);
+            Book = new Book();
         }
 
         public IActionResult OnPost(int bookId)
         {
-            bookData.DeleteBook(bookId);
-            bookData.Commit();
+            //bookData.DeleteBook(bookId);
+            //bookData.Commit();
 
             return RedirectToPage("./List");
         }

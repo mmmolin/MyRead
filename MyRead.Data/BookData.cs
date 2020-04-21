@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MyRead.Data
 {
-    public class BookData : IBookData
+    public class BookData : ICrudData<Book>
     {
         private readonly BookContext bookContext;
 
@@ -14,29 +14,32 @@ namespace MyRead.Data
         {
             this.bookContext = bookContext;
         }
-        public Book AddBook(Book book)
+
+        public IEnumerable<Book> GetAll()
         {
-            throw new NotImplementedException();
+            return bookContext.Books.ToList();
         }
 
-        public int Commit()
-        {
-            throw new NotImplementedException();
-        }
+        //public Book AddBook(Book book)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public void DeleteBook(int bookId)
-        {
-            throw new NotImplementedException();
-        }
+        //public int Commit()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public IEnumerable<Book> GetActiveBooks()
-        {
-            return bookContext.Books.Select(r => r);
-        }
+        //public void DeleteBook(int bookId)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public Book GetBookById(int bookId)
-        {
-            throw new NotImplementedException();
-        }
+
+
+        //public Book GetBookById(int bookId)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
