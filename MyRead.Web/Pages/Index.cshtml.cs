@@ -13,9 +13,9 @@ namespace MyRead.Web.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private readonly IBookData bookData;
+        private readonly ICrudData<Book> bookData;
 
-        public IndexModel(ILogger<IndexModel> logger, IBookData bookData)
+        public IndexModel(ILogger<IndexModel> logger, ICrudData<Book> bookData)
         {
             _logger = logger;
             this.bookData = bookData;
@@ -25,7 +25,7 @@ namespace MyRead.Web.Pages
 
         public void OnGet()
         {
-            Books = bookData.GetActiveBooks();
+            Books = bookData.GetAll();
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿@page
-@model MyRead.Web.Pages.Books.ListModel
+@model MyRead.Web.Pages.Books.Manager.IndexModel
 @{
     ViewData["Title"] = "List";
 }
 
-<h1>Administrator Controls</h1>
+<h1>Book List</h1>
 <table class="table">
     @foreach (var book in Model.Books)
     {
@@ -24,5 +24,5 @@
         </tr>
     }
 </table>
-<a class="btn btn-primary" asp-page="./Edit">Add book</a>
+<a class="btn btn-primary" asp-page="./Create">Add book</a>
 

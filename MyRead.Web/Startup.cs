@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyRead.Data;
+using MyRead.Core;
 
 namespace MyRead.Web
 {
@@ -38,7 +39,9 @@ namespace MyRead.Web
                 options.UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString("BookConnection")));
 
-            services.AddScoped<IBookData, BookData>();
+            services.AddScoped<ICrudData<Book>, BookData>();
+            services.AddScoped<ICrudData<Author>, AuthorData>();
+
             //services.AddSingleton<IBookData, InMemoryBookData>();
 
             services.AddRazorPages();
