@@ -39,8 +39,8 @@ namespace MyRead.Web
                 options.UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString("BookConnection")));
 
-            services.AddScoped<ICrudData<Book>, BookData>();
-            services.AddScoped<ICrudData<Author>, AuthorData>();
+            services.AddScoped<IData<Book>, BookData>();
+            services.AddScoped<IData<Author>, AuthorData>();
 
             //services.AddSingleton<IBookData, InMemoryBookData>();
 

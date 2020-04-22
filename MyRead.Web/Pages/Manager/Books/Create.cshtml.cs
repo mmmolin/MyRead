@@ -3,14 +3,15 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyRead.Core;
 using MyRead.Data;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyRead.Web.Pages.Books.Manager
 {
     public class CreateModel : PageModel
     {
-        private readonly ICrudData<Book> bookData;
-        private readonly ICrudData<Author> authorData;
-        public CreateModel(ICrudData<Book> bookData, ICrudData<Author> authorData)
+        private readonly IData<Book> bookData;
+        private readonly IData<Author> authorData;
+        public CreateModel(IData<Book> bookData, IData<Author> authorData)
         {
             this.bookData = bookData;
             this.authorData = authorData;
@@ -25,16 +26,34 @@ namespace MyRead.Web.Pages.Books.Manager
         public void OnGet(int bookId)
         {
             Book = new Book();
-            Author = new Author(); //<---- här är jag!
-
-            var book = bookData.GetAll();
-            var author = authorData.GetAll();
+            Author = new Author();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            //bookData.AddBook(Book);
-            return RedirectToPage("./List");
+            if(!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            var newBook = new Book();
+            var bookUpdated = await TryUpdateModelAsync<Book> // TryUpdateModelAsync to avoid overposting vulnerability
+                (newBook, nameof(Book), b => b.Title, b => b.CurrentPage, b => b.Pages);
+            
+            var newAuthor = new Author();
+            var authorUpdated = await TryUpdateModelAsync<Author>
+                (newAuthor, nameof(Author), a => a.FirstName, a => a.LastName);
+
+            if(bookUpdated && authorUpdated)
+            {
+                newBook.Author = newAuthor;
+                bookData.Add(newBook);
+                await bookData.CommitAsync();
+
+                return RedirectToPage("./Index");
+            }
+            
+            return Page();
         }
     }
 }

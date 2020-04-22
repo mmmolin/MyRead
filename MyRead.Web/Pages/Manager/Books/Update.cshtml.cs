@@ -7,29 +7,33 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyRead.Core;
 using MyRead.Data;
 
-namespace MyRead.Web.Pages
+namespace MyRead.Web.Pages.Manager.Books
 {
-    public class DeleteModel : PageModel
+    public class UpdateModel : PageModel
     {
         private readonly IData<Book> bookData;
-        public DeleteModel(IData<Book> bookData)
+
+        public UpdateModel(IData<Book> bookData)
         {
             this.bookData = bookData;
         }
 
+        [BindProperty]
         public Book Book { get; set; }
 
         public void OnGet(int bookId)
         {
-            Book = new Book();
+            Book = bookData.GetById(bookId); //Null check
         }
 
-        public IActionResult OnPost(int bookId)
+        public IActionResult OnPost()
         {
-            //bookData.DeleteBook(bookId);
-            //bookData.Commit();
+           if(!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-            return RedirectToPage("./List");
+            return RedirectToPage("./Index");
         }
     }
 }

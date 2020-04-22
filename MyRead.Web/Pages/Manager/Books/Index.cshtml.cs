@@ -7,9 +7,9 @@ namespace MyRead.Web.Pages.Books.Manager
 {
     public class IndexModel : PageModel
     {
-        private readonly ICrudData<Book> bookData;
+        private readonly IData<Book> bookData;
         
-        public IndexModel(ICrudData<Book> bookData)
+        public IndexModel(IData<Book> bookData)
         {
             this.bookData = bookData;
         }

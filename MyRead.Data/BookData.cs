@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MyRead.Data
 {
-    public class BookData : ICrudData<Book>
+    public class BookData : IData<Book>
     {
         private readonly BookContext bookContext;
 
@@ -15,31 +16,26 @@ namespace MyRead.Data
             this.bookContext = bookContext;
         }
 
+        public void Add(Book entity)
+        {
+            bookContext.Add(entity);
+        }
+
         public IEnumerable<Book> GetAll()
         {
             return bookContext.Books.ToList();
         }
 
-        //public Book AddBook(Book book)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public Book GetById(int entityId)
+        {
+            return bookContext.Books.Where(x => x.BookID == entityId).FirstOrDefault();
+        }
 
-        //public int Commit()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        
 
-        //public void DeleteBook(int bookId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
-
-        //public Book GetBookById(int bookId)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<int> CommitAsync()
+        {
+            return await bookContext.SaveChangesAsync();
+        }
     }
 }
