@@ -13,9 +13,9 @@ namespace MyRead.Web.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private readonly ICrudData<Book> bookData;
+        private readonly IData<Book> bookData;
 
-        public IndexModel(ILogger<IndexModel> logger, ICrudData<Book> bookData)
+        public IndexModel(ILogger<IndexModel> logger, IData<Book> bookData)
         {
             _logger = logger;
             this.bookData = bookData;
