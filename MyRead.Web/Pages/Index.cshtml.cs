@@ -23,9 +23,9 @@ namespace MyRead.Web.Pages
 
         public IEnumerable<Book> Books { get; set; }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            Books = bookData.GetAll();
+            Books = await bookData.GetAllAsync();
         }
     }
 }

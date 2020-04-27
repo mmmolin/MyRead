@@ -11,29 +11,30 @@ namespace MyRead.Web.Pages.Manager.Books
 {
     public class UpdateModel : PageModel
     {
-        private readonly IData<Book> bookData;
-
-        public UpdateModel(IData<Book> bookData)
+        private IData<Book> bookData { get; set; }
+        private IData<Author> authorData { get; set; }
+        public UpdateModel(IData<Book> bookData, IData<Author> authorData)
         {
             this.bookData = bookData;
+            this.authorData = authorData;
         }
 
         [BindProperty]
         public Book Book { get; set; }
 
-        public void OnGet(int bookId)
+        public async Task OnGetAsync(int BookID)
         {
-            Book = bookData.GetById(bookId); //Null check
+            Book = await bookData.GetByIdAsync(BookID);
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-           if(!ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 return Page();
             }
 
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }

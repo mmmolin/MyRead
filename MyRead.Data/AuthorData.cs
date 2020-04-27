@@ -1,4 +1,5 @@
-﻿using MyRead.Core;
+﻿using Microsoft.EntityFrameworkCore;
+using MyRead.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,17 +18,17 @@ namespace MyRead.Data
 
         public void Add(Author entity)
         {
-            throw new NotImplementedException();
+            bookContext.Authors.Add(entity);
         }        
 
-        public IEnumerable<Author> GetAll()
+        public async Task<List<Author>> GetAllAsync()
         {
-            return bookContext.Authors.ToList();
+            return await bookContext.Authors.OrderBy(x => x.LastName).ToListAsync();
         }
 
-        public Author GetById(int entityId)
+        public async Task<Author> GetByIdAsync(int entityId)
         {
-            return bookContext.Authors.Where(x => x.AuthorID == entityId).FirstOrDefault();
+            return await bookContext.Authors.Where(x => x.AuthorID == entityId).FirstOrDefaultAsync();
         }
 
         public async Task<int> CommitAsync()

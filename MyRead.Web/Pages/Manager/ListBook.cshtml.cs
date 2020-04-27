@@ -16,9 +16,9 @@ namespace MyRead.Web.Pages.Books.Manager
 
         public IEnumerable<Book> Books { get; set; }
         
-        public void OnGet()
+        public async void OnGetAsync()
         {
-            Books = bookData.GetAll();
+            Books = await bookData.GetAllAsync();
         }
     }
 }
