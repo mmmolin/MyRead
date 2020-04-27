@@ -10,8 +10,8 @@ namespace MyRead.Data
     {
         void Add(TEntity entity);
         
-        IEnumerable<TEntity> GetAll();
-        TEntity GetById(int entityId);
+        Task<List<TEntity>> GetAllAsync();
+        Task<TEntity> GetByIdAsync(int entityId);
 
 
         //void DeleteBook(int bookId);

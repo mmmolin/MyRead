@@ -7,5 +7,5 @@
 <h2>Books I'm reading</h2>
 @foreach(var book in Model.Books)
 {
-    <div class="container">@book.Title</div>
+    <div class="container">@book.Title @book.Author.FirstName @book.Author.LastName</div>
 }

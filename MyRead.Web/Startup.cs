@@ -36,8 +36,7 @@ namespace MyRead.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddDbContextPool<BookContext>(options =>
-                options.UseLazyLoadingProxies()
-                .UseSqlServer(Configuration.GetConnectionString("BookConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("BookConnection")));
 
             services.AddScoped<IData<Book>, BookData>();
             services.AddScoped<IData<Author>, AuthorData>();
