@@ -1,0 +1,19 @@
+﻿@page
+@model MyRead.Web.Pages.Manager.CreateAuthorModel
+@{
+    ViewData["Title"] = "CreateAuthor";
+}
+
+<h1>CreateAuthor</h1>
+<form method="post">
+    <div class="form-group">
+        <label asp-for="AuthorModel.FirstName"></label>
+        <input type="text" asp-for="AuthorModel.FirstName" />
+    </div>
+    <div class="form-group">
+        <label asp-for="AuthorModel.LastName"></label>
+        <input asp-for="AuthorModel.LastName" />
+    </div>
+
+    <button type="submit" class="alert-primary">Save</button>
+</form>
