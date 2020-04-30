@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyRead.Core;
 using MyRead.Data;
 
-namespace MyRead.Web.Pages.Books.Manager
+namespace MyRead.Web.Pages.Manager
 {
-    public class IndexModel : PageModel
+    public class ListBookModel : PageModel
     {
         private readonly IData<Book> bookData;
         
-        public IndexModel(IData<Book> bookData)
+        public ListBookModel(IData<Book> bookData)
         {
             this.bookData = bookData;
         }
 
-        public IEnumerable<Book> Books { get; set; }
+        public List<Book> Books { get; set; }
         
-        public async void OnGetAsync()
+        public  async Task OnGetAsync()
         {
             Books = await bookData.GetAllAsync();
         }

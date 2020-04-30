@@ -4,38 +4,42 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MyRead.Core;
 using MyRead.Core.Models;
 using MyRead.Data;
-using MyRead.Web.Pages.Manager.Books;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MyRead.Web.Pages.Books.Manager
+namespace MyRead.Web.Pages.Manager
 {
-    public class CreateModel : PageModel
+    public class CreateBookModel : PageModel
     {
         private readonly IData<Book> bookData;
         private readonly IData<Author> authorData;
-        public CreateModel(IData<Book> bookData, IData<Author> authorData)
+        public CreateBookModel(IData<Book> bookData, IData<Author> authorData)
         {
             this.bookData = bookData;
-            //this.authorData = authorData;
+            this.authorData = authorData;
         }
 
         [BindProperty]
         public BookModel BookModel { get; set; }
 
-        //public List<SelectListItem> AuthorSelect { get; set; }
+        [Required]
+        [BindProperty]
+        public int AuthorId { get; set; }
 
-        public void OnGet(int bookId)
+        public List<SelectListItem> AuthorSelect { get; set; }
+
+        public async Task OnGetAsync(int bookId)
         {
             BookModel = new BookModel();
 
-            //var authors = await authorData.GetAllAsync();
-            //AuthorSelect = authors.Select(x => new SelectListItem 
-            //{ 
-            //    Value = x.AuthorID.ToString(),
-            //    Text = $"{x.LastName}, {x.FirstName}"
-            //}).ToList();
+            var authors = await authorData.GetAllAsync();
+            AuthorSelect = authors.Select(x => new SelectListItem
+            {
+                Value = x.AuthorID.ToString(),
+                Text = $"{x.LastName}, {x.FirstName}"
+            }).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -45,7 +49,9 @@ namespace MyRead.Web.Pages.Books.Manager
             {
                 return Page();
             }
-            // Shitty way to map, use automapper.
+
+            // temp, use automapper
+            var authorEntity = await authorData.GetByIdAsync(AuthorId);
             var bookEntity = new Book
             {
                 Title = BookModel.Title,
@@ -53,7 +59,11 @@ namespace MyRead.Web.Pages.Books.Manager
                 CurrentPage = 0
             };
 
-            return RedirectToPage("./ListAuthor", bookEntity);
+            bookEntity.Author = authorEntity;
+            bookData.Add(bookEntity);
+            await bookData.CommitAsync();
+
+            return RedirectToPage("./ListBook");
         }
     }
 }
