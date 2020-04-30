@@ -36,7 +36,10 @@ namespace MyRead.Data
                 .FirstOrDefaultAsync();
         }
 
-        
+        public void Remove(Book book)
+        {
+            bookContext.Books.Remove(book);
+        }
 
         public async Task<int> CommitAsync()
         {

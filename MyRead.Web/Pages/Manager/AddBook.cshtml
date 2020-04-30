@@ -1,7 +1,7 @@
 ﻿@page "{bookId:int?}"
-@model MyRead.Web.Pages.Manager.CreateBookModel
+@model MyRead.Web.Pages.Manager.AddBookModel
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Add Book";
 }
 
 <h1>Create</h1>
@@ -24,7 +24,7 @@
     </div>
     <button type="submit" class="alert-primary">Save</button>
 </form>
-<a asp-page="./CreateAuthor" class="btn btn-primary">Add Author</a>
+<a asp-page="./AddAuthor" class="btn btn-primary">Add Author</a>
 <a asp-page="./ListBook" class="btn btn-primary">Return</a>
 
 

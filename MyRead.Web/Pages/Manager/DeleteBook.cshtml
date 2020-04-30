@@ -1,0 +1,11 @@
+﻿@page "{bookId}"
+@model MyRead.Web.Pages.Manager.DeleteBookModel
+@{
+    ViewData["Title"] = "DeleteBook";
+}
+
+<h1>Really delete book?</h1>
+<form method="post">
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-page="./ListBook" class="btn btn-primary">Cancel</a>
+</form>
