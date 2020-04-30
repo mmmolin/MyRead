@@ -10,10 +10,10 @@ using MyRead.Data;
 
 namespace MyRead.Web.Pages.Manager
 {
-    public class CreateAuthorModel : PageModel
+    public class AddAuthorModel : PageModel
     {
         private readonly IData<Author> authorData;
-        public CreateAuthorModel(IData<Author> authorData)
+        public AddAuthorModel(IData<Author> authorData)
         {
             this.authorData = authorData;
         }
@@ -43,7 +43,7 @@ namespace MyRead.Web.Pages.Manager
             authorData.Add(authorEntity);
             await authorData.CommitAsync();
 
-            return RedirectToPage("./CreateBook");
+            return RedirectToPage("./AddBook");
         }
     }
 }

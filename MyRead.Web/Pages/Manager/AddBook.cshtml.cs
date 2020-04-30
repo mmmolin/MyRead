@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace MyRead.Web.Pages.Manager
 {
-    public class CreateBookModel : PageModel
+    public class AddBookModel : PageModel
     {
         private readonly IData<Book> bookData;
         private readonly IData<Author> authorData;
-        public CreateBookModel(IData<Book> bookData, IData<Author> authorData)
+        public AddBookModel(IData<Book> bookData, IData<Author> authorData)
         {
             this.bookData = bookData;
             this.authorData = authorData;

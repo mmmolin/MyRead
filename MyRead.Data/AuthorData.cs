@@ -35,5 +35,10 @@ namespace MyRead.Data
         {
             return await bookContext.SaveChangesAsync();
         }
+
+        public void Remove(Book book)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
