@@ -8,9 +8,7 @@ namespace MyRead.Core
     public class Author
     {
         public int AuthorID { get; set; }
-        [Required]
         public string FirstName { get; set; }
-        [Required]
         public string LastName { get; set; }
         public ICollection<Book> Books { get; set; }
     }
