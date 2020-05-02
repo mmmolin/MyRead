@@ -1,0 +1,19 @@
+﻿@page "{BookId:int}"
+@model MyRead.Web.Pages.Manager.EditBookModel
+@{
+    ViewData["Title"] = "EditBook";
+}
+
+<h1>EditBook</h1>
+<form method="post">
+    <input type="hidden" asp-for="BookModel.BookID" />
+    <div class="form-group">
+        <label asp-for="BookModel.Title"></label>
+        <input asp-for="BookModel.Title" class="form-control" />
+    </div>
+    <div class=form-group>
+        <label asp-for="BookModel.Pages"></label>
+        <input asp-for="BookModel.Pages" class="form-control" />
+    </div>
+    <button type="submit">Update</button>
+</form>
