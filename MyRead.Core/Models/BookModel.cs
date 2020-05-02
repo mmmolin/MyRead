@@ -7,6 +7,7 @@ namespace MyRead.Core.Models
 {
     public class BookModel
     {
+        public int BookID { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]
