@@ -15,5 +15,23 @@
         <label asp-for="BookModel.Pages"></label>
         <input asp-for="BookModel.Pages" class="form-control" />
     </div>
+
+    <div class="form-group">
+        <label>Author</label>
+        <select asp-for="AuthorId" class="authorSelect2"
+                asp-items="@Model.AuthorSelect">
+            <option selected="@Model.BookModel.BookID"></option>
+        </select>
+    </div>
     <button type="submit">Update</button>
 </form>
+
+@*Does not work, try making it global*@
+@section Scripts { 
+    <script>
+        $(document).ready(function () {
+            $(".authorSelect2").Select2();
+        });
+    </script>
+}
+
