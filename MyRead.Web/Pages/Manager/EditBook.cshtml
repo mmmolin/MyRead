@@ -18,19 +18,19 @@
 
     <div class="form-group">
         <label>Author</label>
-        <select asp-for="AuthorId" class="authorSelect2"
+        <select asp-for="AuthorId" class="authorSelect"
                 asp-items="@Model.AuthorSelect">
-            <option selected="@Model.BookModel.BookID"></option>
+            @*<option selected="@Model.BookModel.BookID"></option>*@
+            <option value="">--Select Author--</option>
         </select>
     </div>
     <button type="submit">Update</button>
 </form>
 
-@*Does not work, try making it global*@
-@section Scripts { 
+@section Scripts {
     <script>
         $(document).ready(function () {
-            $(".authorSelect2").Select2();
+            $(".authorSelect").select2();
         });
     </script>
 }
