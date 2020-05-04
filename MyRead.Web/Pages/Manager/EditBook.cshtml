@@ -20,11 +20,12 @@
         <label>Author</label>
         <select asp-for="AuthorId" class="authorSelect"
                 asp-items="@Model.AuthorSelect">
-            @*<option selected="@Model.BookModel.BookID"></option>*@
+            <option selected="@Model.BookModel.BookID"></option>
             <option value="">--Select Author--</option>
         </select>
     </div>
     <button type="submit">Update</button>
+    <a class="btn btn-primary" asp-page="./ListBook">Return</a>
 </form>
 
 @section Scripts {
