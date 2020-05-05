@@ -16,6 +16,9 @@
                 @book.Author.FirstName @book.Author.LastName
             </th>
             <th>
+                @($"{book.CurrentPage}/{book.Pages}")
+            </th>
+            <th>
                 <a class="btn btn-primary" asp-page="./EditBook" asp-route-bookId="@book.BookID">Edit</a>
             </th>
             <th>
@@ -25,4 +28,18 @@
     }
 </table>
 <a class="btn btn-primary" asp-page="./AddBook">Add book</a>
+
+@section Scripts {
+    <script>
+        document.getElementById('currentPage')
+            .addEventListener("keyup", function (event) {
+                event.preventDefault();
+                if (event.keyCode === 13) {
+                    let focusedValue = document.activeElement.value;
+                    document.getElementById('currentValue').value = focusedValue;
+                    document.getElementsByClassName('currentPage').submit();
+                }
+            });
+    </script>
+}
 

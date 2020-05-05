@@ -38,6 +38,7 @@ namespace MyRead.Web.Pages.Manager
             {
                 BookID = bookEntity.BookID,
                 Title = bookEntity.Title,
+                CurrentPage = bookEntity.CurrentPage,
                 Pages = bookEntity.Pages
             };
             BookModel = bookModel;
@@ -61,7 +62,7 @@ namespace MyRead.Web.Pages.Manager
 
             var bookEntity = await bookData.GetByIdAsync(BookModel.BookID);
             bool bookIsUpdated = await TryUpdateModelAsync<Book>(bookEntity, nameof(BookModel), 
-                x => x.Title, x => x.Pages);
+                x => x.Title, x => x.CurrentPage, x => x.Pages);
 
             var authorEntity = await authorData.GetByIdAsync(AuthorId);
 
