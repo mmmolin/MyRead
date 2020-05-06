@@ -33,7 +33,11 @@ namespace MyRead.Web.Pages.Manager
         public async Task OnGetAsync(int bookId)
         {
             BookModel = new BookModel();
+            await PopulateAuthorSelectAsync();
+        }
 
+        private async Task PopulateAuthorSelectAsync()
+        {
             var authors = await authorData.GetAllAsync();
             AuthorSelect = authors.Select(x => new SelectListItem
             {
@@ -44,13 +48,12 @@ namespace MyRead.Web.Pages.Manager
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // Check if required fields are filled in.
             if (!ModelState.IsValid)
             {
+                await PopulateAuthorSelectAsync();
                 return Page();
             }
 
-            // temp, use automapper
             var authorEntity = await authorData.GetByIdAsync(AuthorId);
             var bookEntity = new Book
             {
