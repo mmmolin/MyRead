@@ -38,8 +38,8 @@ namespace MyRead.Web.Pages.Manager
 
         private async Task PopulateAuthorSelectAsync()
         {
-            var authors = await authorData.GetAllAsync();
-            AuthorSelect = authors.Select(x => new SelectListItem
+            var authorEntities = await authorData.GetAllAsync();
+            AuthorSelect = authorEntities.Select(x => new SelectListItem
             {
                 Value = x.AuthorID.ToString(),
                 Text = $"{x.LastName}, {x.FirstName}"
