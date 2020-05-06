@@ -8,11 +8,15 @@
 <form method="post">
     <div class="form-group">
         <label asp-for="@Model.BookModel.Title"></label>
-        <input type="text" asp-for="@Model.BookModel.Title" />
+        <input type="text" asp-for="@Model.BookModel.Title" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.BookModel.CurrentPage"></label>
+        <input type="number" asp-for="@Model.BookModel.CurrentPage" class="form-control" />
     </div>
     <div class="form-group">
         <label asp-for="@Model.BookModel.Pages"></label>
-        <input type="number" asp-for="@Model.BookModel.Pages" />
+        <input type="number" asp-for="@Model.BookModel.Pages" class="form-control" />
     </div>
     <div class="form-group">
         <label>Author</label>
@@ -20,7 +24,6 @@
                 asp-items="@Model.AuthorSelect">
             <option value="">--Select Author--</option>
         </select>
-
     </div>
     <button type="submit" class="alert-primary">Save</button>
 </form>
