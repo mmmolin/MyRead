@@ -45,11 +45,16 @@ namespace MyRead.Web.Pages.Manager
 
             AuthorId = bookEntity.Author.AuthorID;
 
+            await PopulateAuthorSelectAsync();
+        }
+
+        private async Task PopulateAuthorSelectAsync() // DRY, this is in both Add and Edit
+        {
             var authorEntities = await authorData.GetAllAsync();
-            AuthorSelect = authorEntities.Select(x => new SelectListItem 
-            { 
-            Value = x.AuthorID.ToString(),
-            Text = $"{x.FirstName} {x.LastName}"
+            AuthorSelect = authorEntities.Select(x => new SelectListItem
+            {
+                Value = x.AuthorID.ToString(),
+                Text = $"{x.FirstName} {x.LastName}"
             }).ToList();
         }
 
