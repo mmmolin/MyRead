@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyRead.Core;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MyRead.Core.Entities;
 
 namespace MyRead.Data
 {

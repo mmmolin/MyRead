@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using MyRead.Core;
+using MyRead.Core.Entities;
 using MyRead.Core.Models;
 using MyRead.Data;
 using System.Collections.Generic;

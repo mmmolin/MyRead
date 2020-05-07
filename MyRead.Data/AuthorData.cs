@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyRead.Core;
+using MyRead.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MyRead.Data
@@ -36,7 +35,7 @@ namespace MyRead.Data
             return await bookContext.SaveChangesAsync();
         }
 
-        public void Remove(Book book)
+        public void Remove(Author entity)
         {
             throw new NotImplementedException();
         }

@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyRead.Core;
-using System;
+using MyRead.Core.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MyRead.Data
@@ -36,9 +34,9 @@ namespace MyRead.Data
                 .FirstOrDefaultAsync();
         }
 
-        public void Remove(Book book)
+        public void Remove(Book entity)
         {
-            bookContext.Books.Remove(book);
+            bookContext.Books.Remove(entity);
         }
 
         public async Task<int> CommitAsync()

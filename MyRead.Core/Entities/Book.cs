@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace MyRead.Core
+﻿namespace MyRead.Core.Entities
 {
     public class Book
     {
@@ -11,7 +6,7 @@ namespace MyRead.Core
         public string Title { get; set; }
         public int CurrentPage { get; set; }
         public int Pages { get; set; }
-
+        public bool IsArchived { get; set; }
         public Author Author { get; set; }
     }
 }

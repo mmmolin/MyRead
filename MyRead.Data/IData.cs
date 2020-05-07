@@ -14,7 +14,7 @@ namespace MyRead.Data
         Task<TEntity> GetByIdAsync(int entityId);
 
 
-        void Remove(Book book); //async?
+        void Remove(TEntity entity); //async?
         Task<int> CommitAsync();
 
     }
