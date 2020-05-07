@@ -6,7 +6,7 @@
         public string Title { get; set; }
         public int CurrentPage { get; set; }
         public int Pages { get; set; }
-
+        public bool IsArchived { get; set; }
         public Author Author { get; set; }
     }
 }

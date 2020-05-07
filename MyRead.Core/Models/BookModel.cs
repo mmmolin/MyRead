@@ -13,13 +13,15 @@ namespace MyRead.Core.Models
         [Required]
         public string Title { get; set; }
 
+        [RegularExpression(@"\d+")]
+        // Custom range attribute here
+        public int CurrentPage { get; set; }
+
         [RegularExpression(@"\d+$")]
         [Range(1, 3000)]
         [Required]
         public int Pages { get; set; }
 
-        [RegularExpression(@"\d+")]
-        // Custom range attribute here
-        public int CurrentPage { get; set; }
+        public bool IsArchived { get; set; }
     }
 }
