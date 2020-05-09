@@ -22,7 +22,7 @@ namespace MyRead.Web.Pages
 
         public async Task OnGetAsync()
         {
-            Books = await bookData.GetAllAsync();
+            Books = await bookData.GetAllActiveAsync();
         }
     }
 }

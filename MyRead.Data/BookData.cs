@@ -20,9 +20,10 @@ namespace MyRead.Data
             bookContext.Add(entity);
         }
 
-        public async Task<List<Book>> GetAllAsync()
+        public async Task<List<Book>> GetAllActiveAsync()
         {
             return await bookContext.Books
+                .Where(x => !x.IsArchived)
                 .Include(x => x.Author)
                 .ToListAsync();
         }

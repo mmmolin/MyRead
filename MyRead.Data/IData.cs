@@ -1,7 +1,4 @@
-﻿using MyRead.Core;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MyRead.Data
@@ -10,7 +7,7 @@ namespace MyRead.Data
     {
         void Add(TEntity entity);
         
-        Task<List<TEntity>> GetAllAsync();
+        Task<List<TEntity>> GetAllActiveAsync();
         Task<TEntity> GetByIdAsync(int entityId);
 
 

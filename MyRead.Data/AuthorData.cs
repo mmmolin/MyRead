@@ -20,7 +20,7 @@ namespace MyRead.Data
             bookContext.Authors.Add(entity);
         }        
 
-        public async Task<List<Author>> GetAllAsync()
+        public async Task<List<Author>> GetAllActiveAsync()
         {
             return await bookContext.Authors.OrderBy(x => x.LastName).ToListAsync();
         }
