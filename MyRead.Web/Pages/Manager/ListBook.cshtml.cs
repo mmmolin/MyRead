@@ -11,9 +11,6 @@ namespace MyRead.Web.Pages.Manager
     {
         private readonly IData<Book> bookData;
 
-        [BindProperty]
-        public int BookId { get; set; }
-
         public ListBookModel(IData<Book> bookData)
         {
             this.bookData = bookData;
@@ -23,7 +20,19 @@ namespace MyRead.Web.Pages.Manager
 
         public async Task OnGetAsync()
         {
-            Books = await bookData.GetAllAsync();
+            Books = await bookData.GetAllActiveAsync();
+        }
+
+        public async Task<IActionResult> OnPostArchiveAsync(int bookId)
+        {
+            var bookEntity = await bookData.GetByIdAsync(bookId);
+            if(bookEntity != null)
+            {
+                bookEntity.IsArchived = true;
+                await bookData.CommitAsync();
+            }
+
+            return RedirectToPage("./ListBook"); // Fix this!
         }
     }
 }
