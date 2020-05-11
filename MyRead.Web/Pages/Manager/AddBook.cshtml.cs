@@ -62,7 +62,7 @@ namespace MyRead.Web.Pages.Manager
             {
                 Title = BookModel.Title,
                 Pages = BookModel.Pages,
-                CurrentPage = 0
+                CurrentPage = BookModel.CurrentPage
             };
 
             bookEntity.Author = authorEntity;
