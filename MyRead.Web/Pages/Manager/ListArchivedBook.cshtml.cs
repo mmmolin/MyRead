@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using MyRead.Core.Entities;
+using MyRead.Data;
+
+namespace MyRead.Web.Pages.Manager
+{
+    public class ListArchivedBookModel : PageModel
+    {
+        private IData<Book> bookData;
+        
+        public ListArchivedBookModel(IData<Book> bookData)
+        {
+            this.bookData = bookData;
+        }
+        
+        public List<Book> ArchivedBooks { get; set; } 
+
+        public void OnGet()
+        {
+
+        }
+    }
+}

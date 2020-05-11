@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MyRead.Core.Entities;
 using MyRead.Core.Models;
 using MyRead.Data;
@@ -50,7 +51,9 @@ namespace MyRead.Web.Pages.Manager
 
         private async Task PopulateAuthorSelectAsync() // DRY, this is in both Add and Edit
         {
-            var authorEntities = await authorData.GetAllActiveAsync();
+            var authorEntities = await authorData.GetAll()
+                .OrderBy(x => x.LastName)
+                .ToListAsync(); // Read more about this
             AuthorSelect = authorEntities.Select(x => new SelectListItem
             {
                 Value = x.AuthorID.ToString(),
