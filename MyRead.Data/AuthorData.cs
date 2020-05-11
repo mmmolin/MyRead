@@ -18,11 +18,11 @@ namespace MyRead.Data
         public void Add(Author entity)
         {
             bookContext.Authors.Add(entity);
-        }        
+        }
 
-        public async Task<List<Author>> GetAllActiveAsync()
+        public IQueryable<Author> GetAll()
         {
-            return await bookContext.Authors.OrderBy(x => x.LastName).ToListAsync();
+            return bookContext.Authors;
         }
 
         public async Task<Author> GetByIdAsync(int entityId)

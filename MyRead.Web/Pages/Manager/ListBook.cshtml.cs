@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using MyRead.Core.Entities;
 using MyRead.Data;
 
@@ -20,7 +22,10 @@ namespace MyRead.Web.Pages.Manager
 
         public async Task OnGetAsync()
         {
-            Books = await bookData.GetAllActiveAsync();
+            Books = await bookData.GetAll()
+                .Where(x => !x.IsArchived)
+                .Include(x => x.Author)
+                .ToListAsync();
         }
 
         public async Task<IActionResult> OnPostArchiveAsync(int bookId)
@@ -29,10 +34,11 @@ namespace MyRead.Web.Pages.Manager
             if(bookEntity != null)
             {
                 bookEntity.IsArchived = true;
+                bookEntity.CurrentPage = bookEntity.Pages;
                 await bookData.CommitAsync();
             }
 
-            Books = await bookData.GetAllActiveAsync();
+            await this.OnGetAsync();
             return Page();
         }
     }
