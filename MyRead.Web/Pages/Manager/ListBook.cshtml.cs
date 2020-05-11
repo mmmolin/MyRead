@@ -32,7 +32,8 @@ namespace MyRead.Web.Pages.Manager
                 await bookData.CommitAsync();
             }
 
-            return RedirectToPage("./ListBook"); // Fix this!
+            Books = await bookData.GetAllActiveAsync();
+            return Page();
         }
     }
 }
