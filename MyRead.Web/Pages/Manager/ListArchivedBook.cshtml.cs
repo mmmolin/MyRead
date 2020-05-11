@@ -28,5 +28,15 @@ namespace MyRead.Web.Pages.Manager
                 .Include(x => x.Author)
                 .ToListAsync();
         }
+
+        public async Task<IActionResult> OnPostDeleteArchivedBookAsync(int bookId) // return Task or Task<IActionResult>
+        {
+            var archivedBook = new Book { BookID = bookId };
+            bookData.Remove(archivedBook);
+            await bookData.CommitAsync();
+
+            await this.OnGet();
+            return Page();
+        }
     }
 }

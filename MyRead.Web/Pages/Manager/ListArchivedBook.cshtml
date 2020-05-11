@@ -19,7 +19,10 @@
                 <a class="btn btn-primary" asp-page="./UndoArchivedBook" asp-route-bookId="@archivedBook.BookID">Undo</a>
             </th>
             <th>
-                <a class="btn btn-danger" asp-page="./DeleteArchivedBook" asp-route-bookId="@archivedBook.BookID">Delete</a>
+                <form method="post" asp-page-handler="DeleteArchivedBook" asp-route-bookId="@archivedBook.BookID">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                @*<a class="btn btn-danger" asp-page="./DeleteArchivedBook" asp-route-bookId="@archivedBook.BookID">Delete</a>*@
             </th>
         </tr>
     }
