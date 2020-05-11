@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using MyRead.Core.Entities;
 using MyRead.Data;
 
@@ -20,9 +21,12 @@ namespace MyRead.Web.Pages.Manager
         
         public List<Book> ArchivedBooks { get; set; } 
 
-        public void OnGet()
+        public async Task OnGet()
         {
-
+            ArchivedBooks = await bookData.GetAll()
+                .Where(x => x.IsArchived)
+                .Include(x => x.Author)
+                .ToListAsync();
         }
     }
 }

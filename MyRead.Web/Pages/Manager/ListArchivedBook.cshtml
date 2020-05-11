@@ -5,4 +5,22 @@
 }
 
 <h1>ListArchivedBook</h1>
-
+<table class="table">
+    @foreach (var archivedBook in Model.ArchivedBooks)
+    {
+        <tr>
+            <th>
+                @archivedBook.Title
+            </th>
+            <th>
+                @archivedBook.Author.FirstName @archivedBook.Author.LastName
+            </th>
+            <th>
+                <a class="btn btn-primary" asp-page="./UndoArchivedBook" asp-route-bookId="@archivedBook.BookID">Undo</a>
+            </th>
+            <th>
+                <a class="btn btn-danger" asp-page="./DeleteArchivedBook" asp-route-bookId="@archivedBook.BookID">Delete</a>
+            </th>
+        </tr>
+    }
+</table>
