@@ -41,5 +41,20 @@ namespace MyRead.Web.Pages.Manager
             await this.OnGetAsync();
             return Page();
         }
+
+        public async Task<IActionResult> OnPostSetCurrentPageAsync(int bookId, string currentPage)
+        {
+            // ModelState.IsValid?
+            // Todo fix this method, it's working but got issues
+            var bookEntity = await bookData.GetByIdAsync(bookId);
+            if(bookEntity != null && int.Parse(currentPage) <= bookEntity.Pages)
+            {
+                bookEntity.CurrentPage = int.Parse(currentPage);
+                await bookData.CommitAsync();
+            }
+
+            await this.OnGetAsync();
+            return Page();
+        }
     }
 }
