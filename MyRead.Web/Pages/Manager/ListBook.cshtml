@@ -15,8 +15,14 @@
             <th>
                 @book.Author.FirstName @book.Author.LastName
             </th>
-            <th>
+            @*<th>
                 @($"{book.CurrentPage}/{book.Pages}")
+            </th>*@
+            <th>
+                <form method="post" asp-page-handler="SetCurrentPage" asp-route-bookId="@book.BookID">
+                    <input type="number" value="@book.CurrentPage" name="currentPage" id="currentPage" />
+                    @($"/{book.Pages}")
+                </form>
             </th>
             <th>
                 <a class="btn btn-primary" asp-page="./EditBook" asp-route-bookId="@book.BookID">Edit</a>
@@ -35,4 +41,16 @@
 </table>
 <a class="btn btn-primary" asp-page="./AddBook">Add book</a>
 <a class="btn btn-info" asp-page="./ListArchivedBook">Archived books</a>
+
+@section Scripts {
+    <script>
+        document.getElementById('currentPage')
+            .addEventListener("keyup", function (event) {
+                event.preventDefault();
+                if (event.keyCode === 13) {
+                    document.getElementsByClassName('currentPage').submit();
+                }
+            });
+    </script>
+}
 
