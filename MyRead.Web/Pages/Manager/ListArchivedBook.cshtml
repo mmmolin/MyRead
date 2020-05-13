@@ -16,14 +16,16 @@
                 @archivedBook.Author.FirstName @archivedBook.Author.LastName
             </th>
             <th>
-                <a class="btn btn-primary" asp-page="./UndoArchivedBook" asp-route-bookId="@archivedBook.BookID">Undo</a>
+                <form method="post" asp-page-handler="UndoArchivedBook" asp-route-bookId="@archivedBook.BookID">
+                <button type="submit" class="btn btn-primary">Undo</button>
+                </form>
             </th>
             <th>
                 <form method="post" asp-page-handler="DeleteArchivedBook" asp-route-bookId="@archivedBook.BookID">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
-                @*<a class="btn btn-danger" asp-page="./DeleteArchivedBook" asp-route-bookId="@archivedBook.BookID">Delete</a>*@
             </th>
         </tr>
     }
 </table>
+<a asp-page="./ListBook" class="btn btn-primary">Back to list</a>
