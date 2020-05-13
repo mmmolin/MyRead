@@ -31,8 +31,18 @@ namespace MyRead.Web.Pages.Manager
 
         public async Task<IActionResult> OnPostDeleteArchivedBookAsync(int bookId) // return Task or Task<IActionResult>
         {
-            var archivedBook = new Book { BookID = bookId };
-            bookData.Remove(archivedBook);
+            var bookToArchive = new Book { BookID = bookId };
+            bookData.Remove(bookToArchive);
+            await bookData.CommitAsync();
+
+            await this.OnGet();
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostUndoArchivedBookAsync(int bookId)
+        {
+            var bookEntity = await bookData.GetByIdAsync(bookId);
+            bookEntity.IsArchived = false;
             await bookData.CommitAsync();
 
             await this.OnGet();
