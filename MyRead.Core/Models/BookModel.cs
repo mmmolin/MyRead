@@ -23,5 +23,7 @@ namespace MyRead.Core.Models
         public int Pages { get; set; }
 
         public bool IsArchived { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }
