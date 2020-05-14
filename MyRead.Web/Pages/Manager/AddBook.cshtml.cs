@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using MyRead.Core.Entities;
 using MyRead.Core.Models;
 using MyRead.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -62,7 +63,8 @@ namespace MyRead.Web.Pages.Manager
             {
                 Title = BookModel.Title,
                 Pages = BookModel.Pages,
-                CurrentPage = BookModel.CurrentPage
+                CurrentPage = BookModel.CurrentPage,
+                StartDate = DateTime.Today
             };
 
             bookEntity.Author = authorEntity;

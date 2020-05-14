@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,7 @@ namespace MyRead.Web.Pages.Manager
             {
                 bookEntity.IsArchived = true;
                 bookEntity.CurrentPage = bookEntity.Pages;
+                bookEntity.EndDate = DateTime.Today;
                 await bookData.CommitAsync();
             }
 
