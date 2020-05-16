@@ -35,9 +35,11 @@ namespace MyRead.Web
             services.AddScoped<IData<Book>, BookData>();
             services.AddScoped<IData<Author>, AuthorData>();
 
-            //services.AddSingleton<IBookData, InMemoryBookData>();
-
-            services.AddRazorPages();
+            services.AddRazorPages()
+                .AddRazorPagesOptions(option => 
+                {
+                    option.Conventions.AuthorizeFolder("/Manager");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
