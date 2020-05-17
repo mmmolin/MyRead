@@ -23,6 +23,9 @@ namespace MyRead.Web.Pages.Manager
             this.authorData = authorData;
         }
 
+        [TempData]
+        public string SuccessNotification { get; set; }
+
         [BindProperty]
         public BookModel BookModel { get; set; }
 
@@ -70,6 +73,8 @@ namespace MyRead.Web.Pages.Manager
             bookEntity.Author = authorEntity;
             bookData.Add(bookEntity);
             await bookData.CommitAsync();
+
+            SuccessNotification = $"Added {bookEntity.Title} to database";
 
             return RedirectToPage("./ListBook");
         }
