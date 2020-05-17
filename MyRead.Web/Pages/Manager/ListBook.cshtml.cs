@@ -19,6 +19,9 @@ namespace MyRead.Web.Pages.Manager
             this.bookData = bookData;
         }
 
+        [TempData]
+        public string SuccessNotification { get; set; }
+
         public List<Book> Books { get; set; }
 
         public async Task OnGetAsync()
