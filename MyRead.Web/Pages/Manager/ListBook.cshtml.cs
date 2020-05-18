@@ -20,7 +20,13 @@ namespace MyRead.Web.Pages.Manager
         }
 
         [TempData]
-        public string SuccessNotification { get; set; }
+        public string AddNotification { get; set; }
+
+        [TempData]
+        public string DeleteNotification { get; set; }
+
+        [TempData]
+        public string EditNotification { get; set; }
 
         public List<Book> Books { get; set; }
 
