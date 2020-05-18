@@ -10,6 +10,9 @@ namespace MyRead.Web.Pages.Manager
     {
         private readonly IData<Book> bookData;
 
+        [TempData]
+        public string DeleteNotification { get; set; }
+
         public DeleteBookModel(IData<Book> bookData)
         {
             this.bookData = bookData;
@@ -21,10 +24,9 @@ namespace MyRead.Web.Pages.Manager
 
         public async Task<IActionResult> OnPostAsync(int bookId)
         {
-            var bookEntity = new Book()
-            {
-                BookID = bookId
-            };
+            var bookEntity = await bookData.GetByIdAsync(bookId);
+
+            DeleteNotification = $"{bookEntity.Title} deleted from database";
 
             bookData.Remove(bookEntity);
             await bookData.CommitAsync();

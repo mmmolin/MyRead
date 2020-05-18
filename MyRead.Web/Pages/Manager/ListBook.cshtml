@@ -16,8 +16,8 @@
                 @book.Author.FirstName @book.Author.LastName
             </th>
             @*<th>
-                @($"{book.CurrentPage}/{book.Pages}")
-            </th>*@
+                    @($"{book.CurrentPage}/{book.Pages}")
+                </th>*@
             <th>
                 <form method="post" asp-page-handler="SetCurrentPage" asp-route-bookId="@book.BookID">
                     <input type="number" value="@book.CurrentPage" name="currentPage" id="currentPage" />
@@ -34,7 +34,7 @@
                 <form method="post" asp-page-handler="Archive" asp-route-bookId="@book.BookID">
                     <button type="submit" class="btn btn-secondary">Done</button>
                 </form>
-                
+
             </th>
         </tr>
     }
@@ -42,7 +42,20 @@
 <a class="btn btn-primary" asp-page="./AddBook">Add book</a>
 <a class="btn btn-info" asp-page="./ListArchivedBook">Archived books</a>
 
-<h3>@Model.SuccessNotification</h3>
+@if (Model.AddNotification != null)
+{
+    <div class="alert alert-success">@Model.AddNotification</div>
+}
+
+@if (Model.DeleteNotification != null)
+{
+    <div class="alert alert-danger">@Model.DeleteNotification</div>
+}
+
+@if (Model.EditNotification != null)
+{
+    <div class="alert alert-info">@Model.EditNotification</div>
+}
 
 @section Scripts {
     <script>

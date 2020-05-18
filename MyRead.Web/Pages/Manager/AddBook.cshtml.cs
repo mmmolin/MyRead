@@ -24,7 +24,7 @@ namespace MyRead.Web.Pages.Manager
         }
 
         [TempData]
-        public string SuccessNotification { get; set; }
+        public string AddNotification { get; set; }
 
         [BindProperty]
         public BookModel BookModel { get; set; }
@@ -74,7 +74,7 @@ namespace MyRead.Web.Pages.Manager
             bookData.Add(bookEntity);
             await bookData.CommitAsync();
 
-            SuccessNotification = $"Added {bookEntity.Title} to database";
+            AddNotification = $"{bookEntity.Title} added to database";
 
             return RedirectToPage("./ListBook");
         }
