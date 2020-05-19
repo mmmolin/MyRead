@@ -37,7 +37,7 @@ namespace MyRead.Data
 
         public void Remove(Author entity)
         {
-            throw new NotImplementedException();
+            bookContext.Remove(entity);
         }
     }
 }
