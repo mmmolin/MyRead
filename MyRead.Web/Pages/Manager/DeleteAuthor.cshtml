@@ -1,0 +1,11 @@
+﻿@page "{authorId:int}"
+@model MyRead.Web.Pages.Manager.DeleteAuthorModel
+@{
+    ViewData["Title"] = "DeleteAuthor";
+}
+
+<h1>Really Delete Author</h1>
+<form method="post">
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-page="./ListAuthor" class="btn btn-primary">Cancel</a>
+</form>

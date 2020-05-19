@@ -16,6 +16,12 @@ namespace MyRead.Data
         {
             modelBuilder.Entity<Author>().ToTable("Author");
             modelBuilder.Entity<Book>().ToTable("Book");
+
+            modelBuilder.Entity<Book>()
+                .HasOne(x => x.Author)
+                .WithMany(x => x.Books)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

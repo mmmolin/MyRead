@@ -15,9 +15,6 @@
             <th>
                 @book.Author.FirstName @book.Author.LastName
             </th>
-            @*<th>
-                    @($"{book.CurrentPage}/{book.Pages}")
-                </th>*@
             <th>
                 <form method="post" asp-page-handler="SetCurrentPage" asp-route-bookId="@book.BookID">
                     <input type="number" value="@book.CurrentPage" name="currentPage" id="currentPage" />
@@ -41,6 +38,7 @@
 </table>
 <a class="btn btn-primary" asp-page="./AddBook">Add book</a>
 <a class="btn btn-info" asp-page="./ListArchivedBook">Archived books</a>
+<a class="btn btn-secondary" asp-page="./ListAuthor">Authors</a>
 
 @if (Model.AddNotification != null)
 {

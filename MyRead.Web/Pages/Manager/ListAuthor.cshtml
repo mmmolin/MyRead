@@ -1,0 +1,26 @@
+﻿@page
+@model MyRead.Web.Pages.Manager.ListAuthorModel
+@{
+    ViewData["Title"] = "ListAuthor";
+}
+
+<h1>ListAuthor</h1>
+<table>
+    @foreach (var author in Model.Authors)
+    {
+        <tr>
+            <th>
+                @author.FirstName @author.LastName
+            </th>
+            <th>
+                <a class="btn btn-danger" asp-page="./DeleteAuthor" asp-route-authorId="@author.AuthorID">Delete</a>
+            </th>
+        </tr>
+    }
+</table>
+<a class="btn btn-primary" asp-page="./ListBook">Back to Books</a>
+@if (Model.DeleteNotification != null)
+{
+    <div class="alert alert-danger">@Model.DeleteNotification</div>
+}
+
