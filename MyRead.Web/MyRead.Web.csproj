@@ -27,4 +27,9 @@
     <ProjectReference Include="..\MyRead.Data\MyRead.Data.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>

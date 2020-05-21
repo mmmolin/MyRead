@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +10,7 @@ using MyRead.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,14 +20,22 @@ namespace MyRead.Web.Pages.Manager
     {
         private readonly IData<Book> bookData;
         private readonly IData<Author> authorData;
-        public AddBookModel(IData<Book> bookData, IData<Author> authorData)
+
+        private readonly IWebHostEnvironment environment;
+
+        public AddBookModel(IData<Book> bookData, IData<Author> authorData, IWebHostEnvironment environment)
         {
             this.bookData = bookData;
             this.authorData = authorData;
+
+            this.environment = environment;
         }
 
         [TempData]
         public string AddNotification { get; set; }
+
+        [BindProperty]
+        public IFormFile UploadedPicture { get; set; }
 
         [BindProperty]
         public BookModel BookModel { get; set; }
@@ -59,6 +70,12 @@ namespace MyRead.Web.Pages.Manager
             {
                 await PopulateAuthorSelectAsync();
                 return Page();
+            }
+
+            var file = Path.Combine(environment.WebRootPath, "images", UploadedPicture.FileName);
+            using (var fileStream = new FileStream(file, FileMode.Create))
+            {
+                await UploadedPicture.CopyToAsync(fileStream);
             }
 
             var authorEntity = await authorData.GetByIdAsync(AuthorId);
