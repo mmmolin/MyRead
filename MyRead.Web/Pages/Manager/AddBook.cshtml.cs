@@ -46,7 +46,7 @@ namespace MyRead.Web.Pages.Manager
 
         public List<SelectListItem> AuthorSelect { get; set; }
 
-        public async Task OnGetAsync(int bookId)
+        public async Task OnGetAsync(/*int bookId*/)
         {
             BookModel = new BookModel();
             await PopulateAuthorSelectAsync();
@@ -72,7 +72,8 @@ namespace MyRead.Web.Pages.Manager
                 return Page();
             }
 
-            var file = Path.Combine(environment.WebRootPath, "images", UploadedPicture.FileName);
+            // Create Method
+            var file = Path.Combine(environment.WebRootPath, "images\\covers", UploadedPicture.FileName);
             using (var fileStream = new FileStream(file, FileMode.Create))
             {
                 await UploadedPicture.CopyToAsync(fileStream);
