@@ -8,7 +8,7 @@ namespace MyRead.Web.Pages.Manager
 {
     public class DeleteAuthorModel : PageModel
     {
-        private IData<Author> authorData;
+        private readonly IData<Author> authorData;
         public DeleteAuthorModel(IData<Author> authorData)
         {
             this.authorData = authorData;
