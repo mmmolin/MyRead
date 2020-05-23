@@ -34,6 +34,7 @@ namespace MyRead.Web.Pages.Manager
         [TempData]
         public string AddNotification { get; set; }
 
+        [Required]
         [BindProperty]
         public IFormFile UploadedPicture { get; set; }
 
@@ -46,7 +47,7 @@ namespace MyRead.Web.Pages.Manager
 
         public List<SelectListItem> AuthorSelect { get; set; }
 
-        public async Task OnGetAsync(/*int bookId*/)
+        public async Task OnGetAsync()
         {
             BookModel = new BookModel();
             await PopulateAuthorSelectAsync();
@@ -73,7 +74,7 @@ namespace MyRead.Web.Pages.Manager
             }
 
             // Create Method
-            var filePath = Path.Combine("images\\covers", UploadedPicture.FileName); 
+            var filePath = Path.Combine("images/covers", UploadedPicture.FileName); 
             var file = Path.Combine(environment.WebRootPath, filePath);
             using (var fileStream = new FileStream(file, FileMode.Create))
             {
@@ -86,7 +87,8 @@ namespace MyRead.Web.Pages.Manager
                 Title = BookModel.Title,
                 Pages = BookModel.Pages,
                 CurrentPage = BookModel.CurrentPage,
-                StartDate = DateTime.Today
+                StartDate = DateTime.Today,
+                CoverFilePath = filePath
             };
 
             bookEntity.Author = authorEntity;

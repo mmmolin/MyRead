@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using MyRead.Core.Models;
 using MyRead.Data;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,11 +18,13 @@ namespace MyRead.Web.Pages.Manager
     {
         private readonly IData<Book> bookData;
         private readonly IData<Author> authorData;
+        private readonly IWebHostEnvironment environment;
 
-        public EditBookModel(IData<Book> bookData, IData<Author> authorData)
+        public EditBookModel(IData<Book> bookData, IData<Author> authorData, IWebHostEnvironment environment)
         {
             this.bookData = bookData;
             this.authorData = authorData;
+            this.environment = environment;
         }
 
         [TempData]
@@ -32,6 +36,8 @@ namespace MyRead.Web.Pages.Manager
         [Required]
         [BindProperty]
         public int AuthorId { get; set; }
+
+        public string CoverFilePath { get; set; } 
 
         public List<SelectListItem> AuthorSelect { get; set; }
 
@@ -46,6 +52,7 @@ namespace MyRead.Web.Pages.Manager
                 Pages = bookEntity.Pages
             };
             BookModel = bookModel;
+            CoverFilePath = $"/{bookEntity.CoverFilePath}";
 
             AuthorId = bookEntity.Author.AuthorID;
 
