@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -29,6 +30,9 @@ namespace MyRead.Web.Pages.Manager
 
         [TempData]
         public string EditNotification { get; set; }
+
+        [BindProperty]
+        public IFormFile EditUploadedPicture { get; set; }
 
         [BindProperty]
         public BookModel BookModel { get; set; }
@@ -79,6 +83,30 @@ namespace MyRead.Web.Pages.Manager
             }
 
             var bookEntity = await bookData.GetByIdAsync(BookModel.BookID);
+
+            // Set new picture, extract this to method, tidy up.
+            if (EditUploadedPicture != null)
+            {
+
+                // Upload new Picture
+                var newFilePath = Path.Combine("images/covers", EditUploadedPicture.FileName);
+                var file = Path.Combine(environment.WebRootPath, newFilePath);
+                using (var filestream = new FileStream(file, FileMode.Create))
+                {
+                    await EditUploadedPicture.CopyToAsync(filestream);
+                }
+
+                // Delete old picture
+                var oldFilePath = Path.Combine(environment.WebRootPath, bookEntity.CoverFilePath);
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
+
+                // Edit picture path in db
+                bookEntity.CoverFilePath = newFilePath;
+            }
+
             bool bookIsUpdated = await TryUpdateModelAsync<Book>(bookEntity, nameof(BookModel), 
                 x => x.Title, x => x.CurrentPage, x => x.Pages);
 
