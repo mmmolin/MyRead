@@ -73,7 +73,8 @@ namespace MyRead.Web.Pages.Manager
             }
 
             // Create Method
-            var file = Path.Combine(environment.WebRootPath, "images\\covers", UploadedPicture.FileName);
+            var filePath = Path.Combine("images\\covers", UploadedPicture.FileName); 
+            var file = Path.Combine(environment.WebRootPath, filePath);
             using (var fileStream = new FileStream(file, FileMode.Create))
             {
                 await UploadedPicture.CopyToAsync(fileStream);
