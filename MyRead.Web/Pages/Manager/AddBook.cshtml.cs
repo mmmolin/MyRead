@@ -53,6 +53,7 @@ namespace MyRead.Web.Pages.Manager
             await PopulateAuthorSelectAsync();
         }
 
+        // Populate Author Select List
         private async Task PopulateAuthorSelectAsync()
         {
             var authorEntities = await authorData.GetAll()
@@ -65,6 +66,16 @@ namespace MyRead.Web.Pages.Manager
             }).ToList();
         }
 
+        // Upload Picture
+        private async Task UploadPictureToFileSystem(string filePath)
+        {
+            var file = Path.Combine(environment.WebRootPath, filePath);
+            using (var fileStream = new FileStream(file, FileMode.Create))
+            {
+                await UploadedPicture.CopyToAsync(fileStream);
+            }
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -73,14 +84,10 @@ namespace MyRead.Web.Pages.Manager
                 return Page();
             }
 
-            // Create Method
-            var filePath = Path.Combine("images/covers", UploadedPicture.FileName); 
-            var file = Path.Combine(environment.WebRootPath, filePath);
-            using (var fileStream = new FileStream(file, FileMode.Create))
-            {
-                await UploadedPicture.CopyToAsync(fileStream);
-            }
+            var filePath = Path.Combine("images/covers", UploadedPicture.FileName);
+            await UploadPictureToFileSystem(filePath);
 
+            // Mapping in method or automapper?
             var authorEntity = await authorData.GetByIdAsync(AuthorId);
             var bookEntity = new Book
             {

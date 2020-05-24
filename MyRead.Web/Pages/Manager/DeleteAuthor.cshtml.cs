@@ -20,7 +20,7 @@ namespace MyRead.Web.Pages.Manager
         {
 
         }
-        public async Task<IActionResult> OnPost(int authorId) // Cascade did not work, books not deleted.
+        public async Task<IActionResult> OnPost(int authorId)
         {
             var authorEntity = await authorData.GetByIdAsync(authorId);
             
