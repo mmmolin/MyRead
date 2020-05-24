@@ -30,7 +30,7 @@ namespace MyRead.Web.Pages.Manager
                 return Page();
             }
 
-            // automapper here
+            // Method or automapper ?
             var authorEntity = new Author
             {
                 FirstName = AuthorModel.FirstName,
