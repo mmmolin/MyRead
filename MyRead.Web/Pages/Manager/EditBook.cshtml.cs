@@ -45,9 +45,14 @@ namespace MyRead.Web.Pages.Manager
 
         public List<SelectListItem> AuthorSelect { get; set; }
 
-        public async Task OnGetAsync(int BookID)
+        public async Task<IActionResult> OnGetAsync(int BookID)
         {
             var bookEntity = await bookData.GetByIdAsync(BookID);
+            if (bookEntity == null)
+            {
+                return RedirectToPage("./NotFound");
+            }
+
             var bookModel = new BookModel
             {
                 BookID = bookEntity.BookID,
@@ -61,6 +66,8 @@ namespace MyRead.Web.Pages.Manager
             AuthorId = bookEntity.Author.AuthorID;
 
             await PopulateAuthorSelectAsync();
+
+            return Page();
         }
 
         private async Task PopulateAuthorSelectAsync() // DRY, this is in both Add and Edit
