@@ -17,9 +17,15 @@ namespace MyRead.Web.Pages.Manager
         {
             this.bookData = bookData;
         }
-        public void OnGet()
+        public async Task<IActionResult> OnGet(int bookId)
         {
-            // get book show info
+            var bookEntity = await bookData.GetByIdAsync(bookId);
+            if(bookEntity == null)
+            {
+                return RedirectToPage("./NotFound");
+            }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int bookId)
