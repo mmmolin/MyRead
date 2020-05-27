@@ -67,13 +67,36 @@ namespace MyRead.Web.Pages.Manager
         }
 
         // Upload Picture
-        private async Task UploadPictureToFileSystem(string filePath)
+        private async Task UploadPictureToFileSystem(string imagePath)
         {
-            var file = Path.Combine(environment.WebRootPath, filePath);
+            var file = Path.Combine(environment.WebRootPath, imagePath);
             using (var fileStream = new FileStream(file, FileMode.Create))
             {
                 await UploadedPicture.CopyToAsync(fileStream);
             }
+        }
+
+        private async Task<Book> CreateNewBookEntity(string imagePath)
+        {
+            var authorEntity = await authorData.GetByIdAsync(AuthorId);
+            var bookEntity = new Book
+            {
+                Title = BookModel.Title,
+                Pages = BookModel.Pages,
+                CurrentPage = BookModel.CurrentPage,
+                StartDate = DateTime.Today,
+                CoverFilePath = imagePath
+            };
+
+            bookEntity.Author = authorEntity;
+
+            return bookEntity;
+        }
+
+        private async Task SaveBookEntityToDatabase(Book bookEntity)
+        {
+            bookData.Add(bookEntity);
+            await bookData.CommitAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -84,23 +107,11 @@ namespace MyRead.Web.Pages.Manager
                 return Page();
             }
 
-            var filePath = Path.Combine("images/covers", UploadedPicture.FileName);
-            await UploadPictureToFileSystem(filePath);
+            var imagePath = Path.Combine("images/covers", UploadedPicture.FileName);
+            await UploadPictureToFileSystem(imagePath);
 
-            // Mapping in method or automapper?
-            var authorEntity = await authorData.GetByIdAsync(AuthorId);
-            var bookEntity = new Book
-            {
-                Title = BookModel.Title,
-                Pages = BookModel.Pages,
-                CurrentPage = BookModel.CurrentPage,
-                StartDate = DateTime.Today,
-                CoverFilePath = filePath
-            };
-
-            bookEntity.Author = authorEntity;
-            bookData.Add(bookEntity);
-            await bookData.CommitAsync();
+            var bookEntity = await CreateNewBookEntity(imagePath);
+            await SaveBookEntityToDatabase(bookEntity);
 
             AddNotification = $"{bookEntity.Title} added to database";
 
