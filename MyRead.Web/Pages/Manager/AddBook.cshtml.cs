@@ -20,16 +20,16 @@ namespace MyRead.Web.Pages.Manager
     {
         private readonly IData<Book> bookData;
         private readonly IData<Author> authorData;
-
         private readonly IWebHostEnvironment environment;
 
         public AddBookModel(IData<Book> bookData, IData<Author> authorData, IWebHostEnvironment environment)
         {
             this.bookData = bookData;
             this.authorData = authorData;
-
             this.environment = environment;
         }
+
+        // Properties
 
         [TempData]
         public string AddNotification { get; set; }
@@ -53,7 +53,6 @@ namespace MyRead.Web.Pages.Manager
             await PopulateAuthorSelectAsync();
         }
 
-        // Populate Author Select List
         private async Task PopulateAuthorSelectAsync()
         {
             var authorEntities = await authorData.GetAll()
@@ -66,7 +65,33 @@ namespace MyRead.Web.Pages.Manager
             }).ToList();
         }
 
-        // Upload Picture
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                await PopulateAuthorSelectAsync();
+                return Page();
+            }
+
+            try
+            {
+                var imagePath = Path.Combine("images/covers", UploadedPicture.FileName);
+                await UploadPictureToFileSystem(imagePath);
+
+                var bookEntity = await CreateNewBookEntity(imagePath);
+                await SaveBookEntityToDatabase(bookEntity);
+
+                AddNotification = $"{bookEntity.Title} added to database";
+            }
+            catch
+            {
+                // TODO: Log Exception
+                AddNotification = "Book not added to database, check logs.";
+            }
+
+            return RedirectToPage("./ListBook");
+        }
+
         private async Task UploadPictureToFileSystem(string imagePath)
         {
             var file = Path.Combine(environment.WebRootPath, imagePath);
@@ -85,10 +110,10 @@ namespace MyRead.Web.Pages.Manager
                 Pages = BookModel.Pages,
                 CurrentPage = BookModel.CurrentPage,
                 StartDate = DateTime.Today,
-                CoverFilePath = imagePath
-            };
+                CoverFilePath = imagePath,
 
-            bookEntity.Author = authorEntity;
+                Author = authorEntity // TODO: Make NOTNULL in db
+            };
 
             return bookEntity;
         }
@@ -97,25 +122,6 @@ namespace MyRead.Web.Pages.Manager
         {
             bookData.Add(bookEntity);
             await bookData.CommitAsync();
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                await PopulateAuthorSelectAsync();
-                return Page();
-            }
-
-            var imagePath = Path.Combine("images/covers", UploadedPicture.FileName);
-            await UploadPictureToFileSystem(imagePath);
-
-            var bookEntity = await CreateNewBookEntity(imagePath);
-            await SaveBookEntityToDatabase(bookEntity);
-
-            AddNotification = $"{bookEntity.Title} added to database";
-
-            return RedirectToPage("./ListBook");
         }
     }
 }
