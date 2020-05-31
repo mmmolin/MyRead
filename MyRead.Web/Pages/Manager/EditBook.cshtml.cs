@@ -32,7 +32,7 @@ namespace MyRead.Web.Pages.Manager
         public string EditNotification { get; set; }
 
         [BindProperty]
-        public IFormFile EditUploadedPicture { get; set; }
+        public IFormFile UploadedImage { get; set; }
 
         [BindProperty]
         public BookModel BookModel { get; set; }
@@ -41,7 +41,7 @@ namespace MyRead.Web.Pages.Manager
         [BindProperty]
         public int AuthorId { get; set; }
 
-        public string CoverFilePath { get; set; } 
+        public string CoverFilePath { get; set; }
 
         public List<SelectListItem> AuthorSelect { get; set; }
 
@@ -89,46 +89,73 @@ namespace MyRead.Web.Pages.Manager
                 return Page();
             }
 
-            var bookEntity = await bookData.GetByIdAsync(BookModel.BookID);
-
-            // Set new picture, extract this to method, tidy up.
-            if (EditUploadedPicture != null)
+            try
             {
+                var bookEntity = await bookData.GetByIdAsync(BookModel.BookID);
 
-                // Upload new Picture
-                var newFilePath = Path.Combine("images/covers", EditUploadedPicture.FileName);
-                var file = Path.Combine(environment.WebRootPath, newFilePath);
-                using (var filestream = new FileStream(file, FileMode.Create))
+                if (UploadedImage != null)
                 {
-                    await EditUploadedPicture.CopyToAsync(filestream);
+                    // Upload new Picture
+                    var newFilePath = Path.Combine("images/covers", UploadedImage.FileName);
+                    await UploadImageToFileSystem(newFilePath);
+                    // Delete old picture
+                    DeleteOldImageFromFileSystem(bookEntity.CoverFilePath);
+                    // Edit picture path in db
+                    bookEntity.CoverFilePath = newFilePath;
                 }
 
-                // Delete old picture
-                var oldFilePath = Path.Combine(environment.WebRootPath, bookEntity.CoverFilePath);
-                if (System.IO.File.Exists(oldFilePath))
+                bool bookIsUpdated = await UpdateBookEntity(bookEntity);
+                if (bookIsUpdated)
                 {
-                    System.IO.File.Delete(oldFilePath);
+                    await SaveBookEntityToDatabase();
                 }
 
-                // Edit picture path in db
-                bookEntity.CoverFilePath = newFilePath;
+                EditNotification = $"Changes were made to {bookEntity.Title}";
             }
-
-            bool bookIsUpdated = await TryUpdateModelAsync<Book>(bookEntity, nameof(BookModel), 
-                x => x.Title, x => x.CurrentPage, x => x.Pages);
-
-            var authorEntity = await authorData.GetByIdAsync(AuthorId);
-
-            if(bookIsUpdated)
+            catch
             {
-                bookEntity.Author = authorEntity;
-                await bookData.CommitAsync();
+                // TODO: Log Exception
+                EditNotification = $"Book was not updated, check log.";
             }
-
-            EditNotification = $"Changes were made to {bookEntity.Title}";
 
             return RedirectToPage("./ListBook");
         }
 
+        private async Task UploadImageToFileSystem(string newImagePath)
+        {
+            var file = Path.Combine(environment.WebRootPath, newImagePath);
+            using (var fileStream = new FileStream(file, FileMode.Create))
+            {
+                await UploadedImage.CopyToAsync(fileStream);
+            }
+        }
+
+        private void DeleteOldImageFromFileSystem(string oldImagePath)
+        {
+            var oldFilePath = Path.Combine(environment.WebRootPath, oldImagePath);
+            if (System.IO.File.Exists(oldFilePath))
+            {
+                System.IO.File.Delete(oldFilePath);
+            }
+        }
+
+        private async Task<bool> UpdateBookEntity(Book bookEntity)
+        {
+            bool bookIsUpdated = await TryUpdateModelAsync<Book>(bookEntity, nameof(BookModel),
+                x => x.Title, x => x.CurrentPage, x => x.Pages);
+
+            if (bookIsUpdated)
+            {
+                var authorEntity = await authorData.GetByIdAsync(AuthorId);
+                bookEntity.Author = authorEntity;
+            }
+
+            return bookIsUpdated;
+        }
+
+        private async Task SaveBookEntityToDatabase()
+        {
+            await bookData.CommitAsync();
+        }
     }
 }
