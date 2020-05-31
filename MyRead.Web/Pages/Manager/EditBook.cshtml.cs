@@ -103,17 +103,17 @@ namespace MyRead.Web.Pages.Manager
                 {
                     // Upload new Picture
                     var newFilePath = Path.Combine("images/covers", UploadedImage.FileName);
-                    await UploadImageToFileSystem(newFilePath);
+                    await UploadImageToFileSystemAsync(newFilePath);
                     // Delete old picture
                     DeleteOldImageFromFileSystem(bookEntity.CoverFilePath);
                     // Edit picture path in db
                     bookEntity.CoverFilePath = newFilePath;
                 }
 
-                bool bookIsUpdated = await UpdateBookEntity(bookEntity);
+                bool bookIsUpdated = await UpdateBookEntityAsync(bookEntity);
                 if (bookIsUpdated)
                 {
-                    await SaveBookEntityToDatabase();
+                    await SaveBookEntityToDatabaseAsync();
                 }
 
                 EditNotification = $"Changes were made to {bookEntity.Title}";
@@ -127,7 +127,7 @@ namespace MyRead.Web.Pages.Manager
             return RedirectToPage("./ListBook");
         }
 
-        private async Task UploadImageToFileSystem(string newImagePath)
+        private async Task UploadImageToFileSystemAsync(string newImagePath)
         {
             var file = Path.Combine(environment.WebRootPath, newImagePath);
             using (var fileStream = new FileStream(file, FileMode.Create))
@@ -145,7 +145,7 @@ namespace MyRead.Web.Pages.Manager
             }
         }
 
-        private async Task<bool> UpdateBookEntity(Book bookEntity)
+        private async Task<bool> UpdateBookEntityAsync(Book bookEntity)
         {
             bool bookIsUpdated = await TryUpdateModelAsync<Book>(bookEntity, nameof(BookModel),
                 x => x.Title, x => x.CurrentPage, x => x.Pages);
@@ -159,7 +159,7 @@ namespace MyRead.Web.Pages.Manager
             return bookIsUpdated;
         }
 
-        private async Task SaveBookEntityToDatabase()
+        private async Task SaveBookEntityToDatabaseAsync()
         {
             await bookData.CommitAsync();
         }
