@@ -76,10 +76,10 @@ namespace MyRead.Web.Pages.Manager
             try
             {
                 var imagePath = Path.Combine("images/covers", UploadedPicture.FileName);
-                await UploadPictureToFileSystem(imagePath);
+                await UploadPictureToFileSystemAsync(imagePath);
 
-                var bookEntity = await CreateNewBookEntity(imagePath);
-                await SaveBookEntityToDatabase(bookEntity);
+                var bookEntity = await CreateNewBookEntityAsync(imagePath);
+                await SaveBookEntityToDatabaseAsync(bookEntity);
 
                 AddNotification = $"{bookEntity.Title} added to database";
             }
@@ -92,7 +92,7 @@ namespace MyRead.Web.Pages.Manager
             return RedirectToPage("./ListBook");
         }
 
-        private async Task UploadPictureToFileSystem(string imagePath)
+        private async Task UploadPictureToFileSystemAsync(string imagePath)
         {
             var file = Path.Combine(environment.WebRootPath, imagePath);
             using (var fileStream = new FileStream(file, FileMode.Create))
@@ -101,7 +101,7 @@ namespace MyRead.Web.Pages.Manager
             }
         }
 
-        private async Task<Book> CreateNewBookEntity(string imagePath)
+        private async Task<Book> CreateNewBookEntityAsync(string imagePath)
         {
             var authorEntity = await authorData.GetByIdAsync(AuthorId);
             var bookEntity = new Book
@@ -118,7 +118,7 @@ namespace MyRead.Web.Pages.Manager
             return bookEntity;
         }
 
-        private async Task SaveBookEntityToDatabase(Book bookEntity)
+        private async Task SaveBookEntityToDatabaseAsync(Book bookEntity)
         {
             bookData.Add(bookEntity);
             await bookData.CommitAsync();
