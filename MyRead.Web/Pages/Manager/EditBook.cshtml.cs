@@ -41,7 +41,7 @@ namespace MyRead.Web.Pages.Manager
         [BindProperty]
         public int AuthorId { get; set; }
 
-        public string CoverFilePath { get; set; }
+        public string ImageFilePath { get; set; }
 
         public List<SelectListItem> AuthorSelect { get; set; }
 
@@ -53,6 +53,17 @@ namespace MyRead.Web.Pages.Manager
                 return RedirectToPage("./NotFound");
             }
 
+            BookModel = MapEntityToModel(bookEntity);
+            ImageFilePath = $"/{bookEntity.CoverFilePath}";
+            AuthorId = bookEntity.Author.AuthorID;
+
+            await PopulateAuthorSelectAsync();
+
+            return Page();
+        }
+
+        private BookModel MapEntityToModel(Book bookEntity)
+        {
             var bookModel = new BookModel
             {
                 BookID = bookEntity.BookID,
@@ -61,13 +72,8 @@ namespace MyRead.Web.Pages.Manager
                 Pages = bookEntity.Pages
             };
             BookModel = bookModel;
-            CoverFilePath = $"/{bookEntity.CoverFilePath}";
 
-            AuthorId = bookEntity.Author.AuthorID;
-
-            await PopulateAuthorSelectAsync();
-
-            return Page();
+            return bookModel;
         }
 
         private async Task PopulateAuthorSelectAsync() // DRY, this is in both Add and Edit
