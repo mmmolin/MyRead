@@ -40,13 +40,21 @@ namespace MyRead.Web.Pages.Manager
 
         public async Task<IActionResult> OnPostArchiveAsync(int bookId)
         {
-            var bookEntity = await bookData.GetByIdAsync(bookId);
-            if(bookEntity != null)
+            try
             {
-                bookEntity.IsArchived = true;
-                bookEntity.CurrentPage = bookEntity.Pages;
-                bookEntity.EndDate = DateTime.Today;
-                await SaveChangesToDatabaseAsync();
+                var bookEntity = await bookData.GetByIdAsync(bookId);
+                if (bookEntity != null)
+                {
+                    bookEntity.IsArchived = true;
+                    bookEntity.CurrentPage = bookEntity.Pages;
+                    bookEntity.EndDate = DateTime.Today;
+                    await SaveChangesToDatabaseAsync();
+                }
+            }
+            catch
+            {
+                // TODO: Log exception
+                // TODO: Notification?
             }
 
             await this.OnGetAsync();
@@ -55,11 +63,19 @@ namespace MyRead.Web.Pages.Manager
 
         public async Task<IActionResult> OnPostSetCurrentPageAsync(int bookId, string currentPage)
         {
-            var bookEntity = await bookData.GetByIdAsync(bookId);
-            if(bookEntity != null && int.Parse(currentPage) <= bookEntity.Pages)
+            try
             {
-                bookEntity.CurrentPage = int.Parse(currentPage);
-                await SaveChangesToDatabaseAsync();
+                var bookEntity = await bookData.GetByIdAsync(bookId);
+                if (bookEntity != null && int.Parse(currentPage) <= bookEntity.Pages)
+                {
+                    bookEntity.CurrentPage = int.Parse(currentPage);
+                    await SaveChangesToDatabaseAsync();
+                }
+            }
+            catch
+            {
+                // TODO: Log exception
+                // TODO: Notification?
             }
 
             await this.OnGetAsync();
