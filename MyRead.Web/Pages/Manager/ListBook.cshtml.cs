@@ -46,7 +46,7 @@ namespace MyRead.Web.Pages.Manager
                 bookEntity.IsArchived = true;
                 bookEntity.CurrentPage = bookEntity.Pages;
                 bookEntity.EndDate = DateTime.Today;
-                await bookData.CommitAsync();
+                await SaveChangesToDatabaseAsync();
             }
 
             await this.OnGetAsync();
@@ -55,17 +55,20 @@ namespace MyRead.Web.Pages.Manager
 
         public async Task<IActionResult> OnPostSetCurrentPageAsync(int bookId, string currentPage)
         {
-            // ModelState.IsValid?
-            // Todo fix this method, it's working but got issues
             var bookEntity = await bookData.GetByIdAsync(bookId);
             if(bookEntity != null && int.Parse(currentPage) <= bookEntity.Pages)
             {
                 bookEntity.CurrentPage = int.Parse(currentPage);
-                await bookData.CommitAsync();
+                await SaveChangesToDatabaseAsync();
             }
 
             await this.OnGetAsync();
             return Page();
+        }
+
+        private async Task SaveChangesToDatabaseAsync()
+        {
+            await bookData.CommitAsync();
         }
     }
 }
