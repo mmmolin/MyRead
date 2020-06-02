@@ -20,7 +20,7 @@ namespace MyRead.Web.Pages.Manager
         public async Task<IActionResult> OnGet(int bookId)
         {
             var bookEntity = await bookData.GetByIdAsync(bookId);
-            if(bookEntity == null)
+            if (bookEntity == null)
             {
                 return RedirectToPage("./NotFound");
             }
@@ -30,14 +30,32 @@ namespace MyRead.Web.Pages.Manager
 
         public async Task<IActionResult> OnPostAsync(int bookId)
         {
-            var bookEntity = await bookData.GetByIdAsync(bookId);
-
-            DeleteNotification = $"{bookEntity.Title} deleted from database";
-
-            bookData.Remove(bookEntity);
-            await bookData.CommitAsync();
+            try
+            {
+                var bookEntity = await bookData.GetByIdAsync(bookId);
+                if (bookEntity != null)
+                {
+                    await DeleteBookAsync(bookEntity);
+                    DeleteNotification = $"{bookEntity.Title} deleted from database";
+                }
+                else
+                {
+                    DeleteNotification = $"Couldn't delete {bookEntity.Title} from database";
+                }
+            }
+            catch
+            {
+                // TODO: Log Exception
+                DeleteNotification = $"Book couldn't be deleted, check logs.";
+            }
 
             return RedirectToPage("./ListBook");
+        }
+
+        public async Task DeleteBookAsync(Book bookEntity)
+        {
+            bookData.Remove(bookEntity);
+            await bookData.CommitAsync();
         }
     }
 }
