@@ -30,17 +30,34 @@ namespace MyRead.Web.Pages.Manager
                 return Page();
             }
 
-            // Method or automapper ?
+            try
+            {
+                var authorEntity = CreateNewAuthorEntity();
+                await SaveAuthorEntityToDatabaseAsync(authorEntity);
+            }
+            catch
+            {
+                //TODO: Log exception.
+            }
+
+            return RedirectToPage("./AddBook");
+        }
+
+        private Author CreateNewAuthorEntity()
+        {
             var authorEntity = new Author
             {
                 FirstName = AuthorModel.FirstName,
                 LastName = AuthorModel.LastName
             };
 
+            return authorEntity;
+        }
+
+        private async Task SaveAuthorEntityToDatabaseAsync(Author authorEntity)
+        {
             authorData.Add(authorEntity);
             await authorData.CommitAsync();
-
-            return RedirectToPage("./AddBook");
         }
     }
 }
