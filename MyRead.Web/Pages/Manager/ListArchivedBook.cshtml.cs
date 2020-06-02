@@ -12,7 +12,7 @@ namespace MyRead.Web.Pages.Manager
 {
     public class ListArchivedBookModel : PageModel
     {
-        private IData<Book> bookData;
+        private readonly IData<Book> bookData;
         
         public ListArchivedBookModel(IData<Book> bookData)
         {
@@ -29,24 +29,53 @@ namespace MyRead.Web.Pages.Manager
                 .ToListAsync();
         }
 
-        public async Task<IActionResult> OnPostDeleteArchivedBookAsync(int bookId) // return Task or Task<IActionResult>
+        public async Task<IActionResult> OnPostDeleteArchivedBookAsync(int bookId)
         {
-            var bookToArchive = new Book { BookID = bookId };
-            bookData.Remove(bookToArchive);
-            await bookData.CommitAsync();
+            try
+            {
+                DeleteBook(bookId);
+                await SaveChangesToDatabaseAsync();
+            }
+            catch
+            {
+                //TODO: Log error
+            }
 
             await this.OnGet();
             return Page();
         }
 
+        private void DeleteBook(int bookId)
+        {
+            var bookToArchive = new Book { BookID = bookId };
+            bookData.Remove(bookToArchive);
+        }
+
         public async Task<IActionResult> OnPostUndoArchivedBookAsync(int bookId)
+        {
+            try
+            {
+                await UndoArchivedBook(bookId);
+                await SaveChangesToDatabaseAsync();
+            }
+            catch
+            {
+                //TODO: Log error
+            }
+            
+            await this.OnGet();
+            return Page();
+        }
+
+        private async Task UndoArchivedBook(int bookId)
         {
             var bookEntity = await bookData.GetByIdAsync(bookId);
             bookEntity.IsArchived = false;
-            await bookData.CommitAsync();
+        }
 
-            await this.OnGet();
-            return Page();
+        private async Task SaveChangesToDatabaseAsync()
+        {
+            await bookData.CommitAsync();
         }
     }
 }
