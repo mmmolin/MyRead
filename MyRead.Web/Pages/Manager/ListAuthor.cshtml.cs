@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyRead.Core.Entities;
@@ -11,7 +9,7 @@ namespace MyRead.Web.Pages.Manager
 {
     public class ListAuthorModel : PageModel
     {
-        private IData<Author> authorData; 
+        private readonly IData<Author> authorData; 
         public ListAuthorModel(IData<Author> authorData)
         {
             this.authorData = authorData;
