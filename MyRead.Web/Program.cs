@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Serilog.Events;
 using System;
 
 namespace MyRead.Web
@@ -10,6 +11,9 @@ namespace MyRead.Web
         public static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("System", LogEventLevel.Error)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .CreateLogger();

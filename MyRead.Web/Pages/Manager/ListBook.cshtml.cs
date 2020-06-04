@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyRead.Core.Entities;
 using MyRead.Data;
+using Serilog;
 
 namespace MyRead.Web.Pages.Manager
 {
@@ -36,6 +37,7 @@ namespace MyRead.Web.Pages.Manager
                 .Where(x => !x.IsArchived)
                 .Include(x => x.Author)
                 .ToListAsync();
+
         }
 
         public async Task<IActionResult> OnPostArchiveAsync(int bookId)
