@@ -18,6 +18,18 @@ namespace MyRead.Data
             modelBuilder.Entity<Book>().ToTable("Book");
 
             modelBuilder.Entity<Book>()
+                .Property(x => x.Title)
+                .IsRequired();
+
+            modelBuilder.Entity<Author>()
+                .Property(x => x.FirstName)
+                .IsRequired();
+
+            modelBuilder.Entity<Author>()
+                .Property(x => x.LastName)
+                .IsRequired();
+
+            modelBuilder.Entity<Book>()
                 .HasOne(x => x.Author)
                 .WithMany(x => x.Books)
                 .IsRequired()
