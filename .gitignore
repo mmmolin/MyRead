@@ -355,3 +355,4 @@ MigrationBackup/
 # My added ignores
 appsettings.json
 **/wwwroot/images/covers/*
+**/Logs/*

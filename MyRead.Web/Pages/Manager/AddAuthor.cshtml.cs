@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyRead.Core.Entities;
 using MyRead.Core.Models;
 using MyRead.Data;
+using Serilog;
 
 namespace MyRead.Web.Pages.Manager
 {
@@ -35,9 +37,9 @@ namespace MyRead.Web.Pages.Manager
                 var authorEntity = CreateNewAuthorEntity();
                 await SaveAuthorEntityToDatabaseAsync(authorEntity);
             }
-            catch
+            catch(Exception ex)
             {
-                //TODO: Log exception.
+                Log.Logger.Error("Exception in AddAuthor OnPostAsync: " + ex);
             }
 
             return RedirectToPage("./AddBook");

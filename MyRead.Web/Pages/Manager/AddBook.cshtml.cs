@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using MyRead.Core.Entities;
 using MyRead.Core.Models;
 using MyRead.Data;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -28,8 +29,6 @@ namespace MyRead.Web.Pages.Manager
             this.authorData = authorData;
             this.environment = environment;
         }
-
-        // Properties
 
         [TempData]
         public string AddNotification { get; set; }
@@ -83,9 +82,9 @@ namespace MyRead.Web.Pages.Manager
 
                 AddNotification = $"{bookEntity.Title} added to database";
             }
-            catch
+            catch(Exception ex)
             {
-                // TODO: Log Exception
+                Log.Logger.Error("Exception in AddBook OnPostAsync: " + ex);
                 AddNotification = "Book not added to database, check logs.";
             }
 
