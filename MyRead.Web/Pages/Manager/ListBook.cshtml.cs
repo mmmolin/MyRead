@@ -53,9 +53,9 @@ namespace MyRead.Web.Pages.Manager
                     await SaveChangesToDatabaseAsync();
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                // TODO: Log exception
+                Log.Logger.Error("Exception in ListBook OnPostArchiveAsync: " + ex);
                 // TODO: Notification?
             }
 
@@ -74,9 +74,9 @@ namespace MyRead.Web.Pages.Manager
                     await SaveChangesToDatabaseAsync();
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                // TODO: Log exception
+                Log.Logger.Error("Exception in ListBook OnPostSetCurrentPageAsync: " + ex);
                 // TODO: Notification?
             }
 

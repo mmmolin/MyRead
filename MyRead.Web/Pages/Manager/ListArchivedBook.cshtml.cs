@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyRead.Core.Entities;
 using MyRead.Data;
+using Serilog;
 
 namespace MyRead.Web.Pages.Manager
 {
@@ -35,9 +37,9 @@ namespace MyRead.Web.Pages.Manager
                 DeleteBook(bookId);
                 await SaveChangesToDatabaseAsync();
             }
-            catch
+            catch(Exception ex)
             {
-                //TODO: Log error
+                Log.Logger.Error("Exception in ListArchivedBook OnPostDeleteArchivedBookAsync: " + ex);
             }
 
             await this.OnGet();
@@ -57,9 +59,9 @@ namespace MyRead.Web.Pages.Manager
                 await UndoArchivedBook(bookId);
                 await SaveChangesToDatabaseAsync();
             }
-            catch
+            catch(Exception ex)
             {
-                //TODO: Log error
+                Log.Logger.Error("Exception in ListArchivedBook OnPostUndoArchivedBookAsync: " + ex);
             }
             
             await this.OnGet();

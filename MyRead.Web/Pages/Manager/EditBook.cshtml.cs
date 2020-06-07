@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using MyRead.Core.Entities;
 using MyRead.Core.Models;
 using MyRead.Data;
+using Serilog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
@@ -118,9 +120,9 @@ namespace MyRead.Web.Pages.Manager
 
                 EditNotification = $"Changes were made to {bookEntity.Title}";
             }
-            catch
+            catch(Exception ex)
             {
-                // TODO: Log Exception
+                Log.Logger.Error("Exception in EditBook OnPostAsync: " + ex);
                 EditNotification = $"Book was not updated, check log.";
             }
 

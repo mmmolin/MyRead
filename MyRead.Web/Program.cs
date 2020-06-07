@@ -15,7 +15,7 @@ namespace MyRead.Web
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .MinimumLevel.Override("System", LogEventLevel.Error)
                 .Enrich.FromLogContext()
-                .WriteTo.Console()
+                .WriteTo.File("./Logs/Log.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
             try
             {

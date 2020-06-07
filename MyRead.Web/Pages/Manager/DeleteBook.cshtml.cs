@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyRead.Core.Entities;
 using MyRead.Data;
+using Serilog;
 
 namespace MyRead.Web.Pages.Manager
 {
@@ -43,9 +45,9 @@ namespace MyRead.Web.Pages.Manager
                     DeleteNotification = $"Couldn't delete {bookEntity.Title} from database";
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                // TODO: Log Exception
+                Log.Logger.Error("Exception in DeleteBook OnPostAsync: " + ex);
                 DeleteNotification = $"Book couldn't be deleted, check logs.";
             }
 
