@@ -18,12 +18,12 @@
                 </th>
                 <th>
                     <form method="post" asp-page-handler="UndoArchivedBook" asp-route-bookId="@archivedBook.BookID">
-                        <button type="submit" class="btn btn-primary">Undo</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Unarchive</button>
                     </form>
                 </th>
                 <th>
                     <form method="post" asp-page-handler="DeleteArchivedBook" asp-route-bookId="@archivedBook.BookID">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
                 </th>
             </tr>
