@@ -5,27 +5,29 @@
 }
 
 <h1>ListArchivedBook</h1>
-<table class="table">
-    @foreach (var archivedBook in Model.ArchivedBooks)
-    {
-        <tr>
-            <th>
-                @archivedBook.Title
-            </th>
-            <th>
-                @archivedBook.Author.FirstName @archivedBook.Author.LastName
-            </th>
-            <th>
-                <form method="post" asp-page-handler="UndoArchivedBook" asp-route-bookId="@archivedBook.BookID">
-                <button type="submit" class="btn btn-primary">Undo</button>
-                </form>
-            </th>
-            <th>
-                <form method="post" asp-page-handler="DeleteArchivedBook" asp-route-bookId="@archivedBook.BookID">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </th>
-        </tr>
-    }
+<table class="table table-hover">
+    <tbody>
+        @foreach (var archivedBook in Model.ArchivedBooks)
+        {
+            <tr>
+                <th>
+                    @archivedBook.Title
+                </th>
+                <th>
+                    @archivedBook.Author.FirstName @archivedBook.Author.LastName
+                </th>
+                <th>
+                    <form method="post" asp-page-handler="UndoArchivedBook" asp-route-bookId="@archivedBook.BookID">
+                        <button type="submit" class="btn btn-primary">Undo</button>
+                    </form>
+                </th>
+                <th>
+                    <form method="post" asp-page-handler="DeleteArchivedBook" asp-route-bookId="@archivedBook.BookID">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </th>
+            </tr>
+        }
+    </tbody>    
 </table>
 <a asp-page="./ListBook" class="btn btn-primary">Back to list</a>
