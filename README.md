@@ -7,6 +7,7 @@ Built in ASP.NET Core Razor Pages and Entity Framework Core.
 # What I've learned
 * Developing a web application with Razor Pages.
 * Entity Framework Core.
+* Logging with Serilog.
 * Using Dependency Injection in ASP.
 * Validating user inputs.
 * Using BootStrap as front-end framework.
